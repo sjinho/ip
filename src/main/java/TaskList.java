@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class TaskList {
     /** Final array list of tasks which stores tasks names */
-    private final List<String> tasks = new ArrayList<>();
+    private final List<Task> tasks = new ArrayList<>();
 
     public TaskList() {}
 
@@ -40,9 +40,10 @@ public class TaskList {
      * @param index the index of task to get.
      * @return boolean
      */
-    public String getTask(int index) {
+    public Task getTask(int index) {
         return tasks.get(index);
     }
+
 
     /**
      * It adds given task to array list of tasks.
@@ -50,6 +51,18 @@ public class TaskList {
      * @param task the task to be added
      */
     public void addTask(String task) {
-        tasks.add(task);
+        tasks.add(new Task(task));
+    }
+
+    public String toNumberedListItems() {
+        if (tasks.isEmpty()) {
+            return "No tasks yet.";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(i + 1).append(".").append(tasks.get(i));
+            if (i < tasks.size() - 1) sb.append("\n");
+        }
+        return sb.toString();
     }
 }
