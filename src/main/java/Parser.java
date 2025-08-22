@@ -12,9 +12,15 @@ public class Parser {
 
         switch (commandWord) {
             case "bye":
+                if (parts.length > 1) {
+                    throw new JinBotException("Error! Only write 'bye' to escape");
+                }
                 return new ByeCommand();
 
             case "list":
+                if (parts.length > 1) {
+                    throw new JinBotException("Error! Only write 'list' to list down your tasks");
+                }
                 return new ListCommand();
 
             case "mark":
@@ -59,6 +65,13 @@ public class Parser {
                     throw new JinBotException("Error! Needs both /from and /to times.");
                 }
                 return new EventCommand(fromParts[0].trim(), toParts[0].trim(), toParts[1].trim());
+            }
+
+            case "delete": {
+                if (parts.length < 2) {
+                    throw new JinBotException("Error! Provide a task number to delete.");
+                }
+                return new DeleteCommand(parts[1]);
             }
 
             default:

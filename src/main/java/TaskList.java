@@ -14,6 +14,11 @@ public class TaskList {
         return tasks.get(index);
     }
 
+    public Task removeTask(int index) {
+        return tasks.remove(index);
+    }
+
+
     public void addTask(Task task) {
         tasks.add(task);
     }
