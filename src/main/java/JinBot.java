@@ -15,11 +15,18 @@ public class JinBot {
 
         while (true) {
             String userInput = scanner.nextLine();
-            Command command = Parser.parse(userInput);
-            command.execute(ui, taskList);
 
-            if (command instanceof ByeCommand) {
-                return;
+            try {
+                Command command = Parser.parse(userInput);
+                command.execute(ui, taskList);
+
+                if (command instanceof ByeCommand) {
+                    return;
+                }
+            } catch (JinBotException e) {
+                ui.printBox(e.getMessage());
+            } catch (Exception e) {
+                ui.printBox("Oops! Something went wrong. Please try again.");
             }
         }
     }
