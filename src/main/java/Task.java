@@ -1,5 +1,5 @@
 public class Task {
-    private String taskName;
+    private final String taskName;
     private boolean isDone;
 
     public Task(String taskName) {
@@ -22,6 +22,7 @@ public class Task {
     public String getTaskName() {
         return taskName;
     }
+
 
     @Override
     public String toString() {
