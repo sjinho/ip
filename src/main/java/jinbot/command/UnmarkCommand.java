@@ -4,13 +4,29 @@ import jinbot.task.Task;
 import jinbot.task.TaskList;
 import jinbot.ui.Ui;
 
+/**
+ * Represents a command to mark a task in the task list as not done.
+ */
 public class UnmarkCommand implements Command {
     private final int index;
 
+    /**
+     * Constructs an UnmarkCommand with the given index string.
+     * The string is parsed into a zero-based integer index.
+     *
+     * @param indexString The 1-based index of the task to unmark, as a string.
+     */
     public UnmarkCommand(String indexString) {
         this.index = Integer.parseInt(indexString) - 1;
     }
 
+    /**
+     * Executes the unmark command by marking the specified task as not done
+     * in the task list and displaying a confirmation message.
+     *
+     * @param ui       The UI instance that handles user interaction.
+     * @param taskList The task list containing the task to be unmarked.
+     */
     @Override
     public void execute(Ui ui, TaskList taskList) {
         Task taskToUnmark = taskList.getTask(index);

@@ -8,16 +8,32 @@ import jinbot.task.Deadline;
 import java.time.LocalDate;
 
 
-
+/**
+ * Represents a command to add a deadline task to the task list.
+ * A deadline task has a description and a due date.
+ */
 public class DeadlineCommand implements Command {
     private final String description;
     private final LocalDate by;
 
+    /**
+     * Constructs a DeadlineCommand with the given description and due date.
+     *
+     * @param description The description of the deadline task.
+     * @param by          The due date of the deadline task.
+     */
     public DeadlineCommand(String description, LocalDate by) {
         this.description = description;
         this.by = by;
     }
 
+    /**
+     * Executes the deadline command by creating a new Deadline task,
+     * adding it to the task list, and displaying a confirmation message.
+     *
+     * @param ui       The UI instance that handles user interaction.
+     * @param taskList The task list to which the deadline task is added.
+     */
     @Override
     public void execute(Ui ui, TaskList taskList) {
         Task deadline = new Deadline(description, by);
