@@ -9,11 +9,20 @@ import jinbot.storage.Storage;
 import jinbot.command.Command;
 import jinbot.command.ByeCommand;
 
+/**
+ * The main class of the JinBot application.
+ * JinBot is a task manager that supports commands such as adding todos,
+ * deadlines, events, marking tasks, and saving them to disk.
+ */
 public class JinBot {
     private final Ui ui;
     private final TaskList taskList;
     private final Storage storage;
 
+    /**
+     * Constructs a JinBot instance.
+     * Initializes the UI and storage, and loads previously saved tasks.
+     */
     public JinBot() {
         this.ui = new Ui();
         this.storage = new Storage();
@@ -25,6 +34,12 @@ public class JinBot {
         }
     }
 
+    /**
+     * Runs the main loop of JinBot.
+     * Continuously reads user input, parses it into a command,
+     * executes the command, and saves the updated task list.
+     * Terminates when a ByeCommand is issued.
+     */
     public void run() {
         ui.showGreeting();
 
@@ -46,6 +61,9 @@ public class JinBot {
         }
     }
 
+    /**
+     * Application entry point.
+     */
     public static void main(String[] args) {
         new JinBot().run();
     }

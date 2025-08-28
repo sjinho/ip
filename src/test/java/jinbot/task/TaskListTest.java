@@ -33,7 +33,7 @@ public class TaskListTest {
     public void toNumberedListItems_emptyList_returnsNoTasksMessage() {
         TaskList taskList = new TaskList();
 
-        String expected = "No tasks yet.";
+        String expected = "No tasks yet";
         assertEquals(expected, taskList.toNumberedListItems());
     }
 

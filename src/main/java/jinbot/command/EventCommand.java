@@ -7,17 +7,34 @@ import jinbot.task.TaskList;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a command to add an event task to the task list.
+ */
 public class EventCommand implements Command {
     private final String description;
     private final LocalDate from;
     private final LocalDate to;
 
+    /**
+     * Constructs an EventCommand with the given description, start date, and end date.
+     *
+     * @param description The description of the event.
+     * @param from        The start date of the event.
+     * @param to          The end date of the event.
+     */
     public EventCommand(String description, LocalDate from, LocalDate to) {
         this.description = description;
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Executes the event command by creating a new Event task,
+     * adding it to the task list, and displaying a confirmation message.
+     *
+     * @param ui       The UI instance that handles user interaction.
+     * @param taskList The task list to which the event is added.
+     */
     @Override
     public void execute(Ui ui, TaskList taskList) {
         Task event = new Event(description, from, to);

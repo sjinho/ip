@@ -17,17 +17,17 @@ import java.util.Scanner;
 
 /**
  * Handles loading and saving tasks to disk using a simple line format.
- * Example lines:
- * T | 1 | read book
- * D | 0 | return book | Sunday
- * E | 0 | project meeting | Mon 2pm | 4pm
  */
 public class Storage {
     private static final String DATA_DIR = "data";
     private static final String FILE_NAME = "jinbot.txt";
 
-    /** 
-     * Parses a single save-line into a jinbot.task.Task.
+    /**
+     * Parses a single saved line into a Task.
+     *
+     * @param line A line from the save file.
+     * @return The corresponding Task represented by the line.
+     * @throws IllegalArgumentException If the line is corrupted or cannot be parsed.
      */
     private Task parseLineToTask(String line) {
         // Split on: optional spaces, literal '|', optional spaces
@@ -42,11 +42,9 @@ public class Storage {
         Task task;
         switch (type) {
         case "T":
-            // T | done | description
             task = new Todo(p[2]);
             break;
         case "D":
-            // D | done | description | by
             if (p.length != 4) {
                 throw new IllegalArgumentException("Corrupted deadline: " + line);
             }
@@ -59,7 +57,6 @@ public class Storage {
             break;
 
         case "E":
-            // E | done | description | from-to
             if (p.length < 4) {
                 throw new IllegalArgumentException("Corrupted event: " + line);
             }
@@ -84,6 +81,12 @@ public class Storage {
         return task;
     }
 
+    /**
+     * Loads tasks from disk. If no save file exists, creates an empty one and returns
+     * an empty list. Invalid lines in the file are skipped with an error message.
+     *
+     * @return A list of tasks loaded from disk.
+     */
     public List<Task> loadTasks() {
         List<Task> loadedTasks = new ArrayList<>();
 
@@ -119,6 +122,11 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Saves all tasks in the given task list to disk, overwriting the existing save file.
+     *
+     * @param tasks The task list whose tasks are to be saved.
+     */
     public void saveTasks(TaskList tasks) {
         File file = new File(DATA_DIR, FILE_NAME);
         try (FileWriter fileWriter = new FileWriter(file)) {

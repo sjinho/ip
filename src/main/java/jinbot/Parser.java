@@ -6,8 +6,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input into executable Command objects.
+ */
 public class Parser {
 
+    /**
+     * Parses the given user input string and returns the corresponding Command.
+     *
+     * @param input The raw user input string.
+     * @return The Command representing the user’s instruction.
+     * @throws JinBotException If the input is empty, malformed, or contains an invalid command.
+     */
     public static Command parse(String input) throws JinBotException {
         String trimmedInput = input.trim();
         LocalDate today = LocalDate.now();
