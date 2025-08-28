@@ -26,7 +26,9 @@ public class Storage {
     private static final String DATA_DIR = "data";
     private static final String FILE_NAME = "jinbot.txt";
 
-    /** Parses a single save-line into a jinbot.task.Task. */
+    /** 
+     * Parses a single save-line into a jinbot.task.Task.
+     */
     private Task parseLineToTask(String line) {
         // Split on: optional spaces, literal '|', optional spaces
         String[] p = line.split("\\s*\\|\\s*");
