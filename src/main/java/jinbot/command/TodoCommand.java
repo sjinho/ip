@@ -1,3 +1,10 @@
+package jinbot.command;
+
+import jinbot.task.Todo;
+import jinbot.ui.Ui;
+import jinbot.task.Task;
+import jinbot.task.TaskList;
+
 public class TodoCommand implements Command {
     private final String description;
 

@@ -1,3 +1,9 @@
+package jinbot.command;
+
+import jinbot.task.Task;
+import jinbot.task.TaskList;
+import jinbot.ui.Ui;
+
 public class UnmarkCommand implements Command {
     private final int index;
 

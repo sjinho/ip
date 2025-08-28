@@ -1,3 +1,10 @@
+package jinbot.command;
+
+import jinbot.task.Event;
+import jinbot.ui.Ui;
+import jinbot.task.Task;
+import jinbot.task.TaskList;
+
 import java.time.LocalDate;
 
 public class EventCommand implements Command {
