@@ -20,7 +20,6 @@ public class TaskList {
         return tasks.remove(index);
     }
 
-
     public void addTask(Task task) {
         tasks.add(task);
     }

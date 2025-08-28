@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 
-
 public class EventCommand implements Command {
     private final String description;
     private final LocalDate from;

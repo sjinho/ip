@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 
-
 public class DeadlineCommand implements Command {
     private final String description;
     private final LocalDate by;

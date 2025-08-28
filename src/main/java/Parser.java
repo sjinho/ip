@@ -6,6 +6,7 @@ public class Parser {
 
     public static Command parse(String input) throws JinBotException {
         String trimmedInput = input.trim();
+        LocalDate today = LocalDate.now();
 
         if (trimmedInput.isEmpty()) {
             throw new JinBotException("Error! Empty input!");
@@ -65,9 +66,15 @@ public class Parser {
                 throw new JinBotException("Error! Needs a description and a /by time.");
             }
 
+
             try {
                 // Use the custom formatter to parse the date and time
                 LocalDate by = LocalDate.parse(byString);
+
+                if (by.isBefore(today)) {
+                    throw new JinBotException("Error! The deadline date has already passed. Please enter a future date.");
+                }
+
                 return new DeadlineCommand(description, by);
             } catch (DateTimeParseException e) {
                 try {
@@ -100,9 +107,17 @@ public class Parser {
             String toString = toParts[1].trim();
 
             try {
-                // Parse both 'from' and 'to' times as LocalDateTime objects using the formatter
                 LocalDate from = LocalDate.parse(fromString);
                 LocalDate to = LocalDate.parse(toString);
+
+                if (from.isBefore(today)) {
+                    throw new JinBotException("Error! The event start date has already passed. Please enter today’s date or a future date.");
+                }
+
+                if (to.isBefore(from)) {
+                    throw new JinBotException("Error! The event start date must be before the end date.");
+                }
+
                 return new EventCommand(eventDescription, from, to);
             } catch (DateTimeParseException e) {
                 try {

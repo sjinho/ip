@@ -10,7 +10,6 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-
     @Override
     public String toSaveFormat() {
         return "D | " + (getisDone() ? "1" : "0")
