@@ -19,10 +19,17 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
+    public boolean getisDone() {
+        return this.isDone;
+    }
+
     public String getTaskName() {
         return taskName;
     }
 
+    public String toSaveFormat() {
+        return "T | " + (isDone ? "1" : "0") + " | " + taskName;
+    }
 
     @Override
     public String toString() {

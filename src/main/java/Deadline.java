@@ -7,6 +7,13 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+
+    @Override
+    public String toSaveFormat() {
+        return "D | " + (getisDone() ? "1" : "0")
+            + " | " + getTaskName() + " | " + by;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
