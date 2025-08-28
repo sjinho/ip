@@ -139,6 +139,12 @@ public class Parser {
             }
             return new DeleteCommand(parts[1]);
 
+        case "find":
+            if (parts.length < 2) {
+                throw new JinBotException("Error! Provide a keyword to search for tasks.");
+            }
+            return new FindCommand(parts[1].trim());
+
         default:
             throw new JinBotException("Error! I don't understand that command word: " + commandWord);
         }
