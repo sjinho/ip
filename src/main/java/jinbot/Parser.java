@@ -24,7 +24,7 @@ public class Parser {
         switch (commandWord) {
         case "bye":
             if (parts.length > 1) {
-                throw new JinBotException("Error! Only write 'bye' to escape");
+                throw new JinBotException("Error! Only write 'bye' to escape.");
             }
 
             return new ByeCommand();
