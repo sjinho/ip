@@ -2,9 +2,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class TaskList {
-    private final List<Task> tasks = new ArrayList<>();
+    private final List<Task> tasks;
 
-    public TaskList() {}
+    public TaskList() {
+        this.tasks = new ArrayList<>();
+    }
 
     public int getSize() {
         return tasks.size();

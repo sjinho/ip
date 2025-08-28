@@ -1,12 +1,20 @@
 import java.util.Scanner;
+import java.util.List;
 
 public class JinBot {
     private final Ui ui;
     private final TaskList taskList;
+    private final Storage storage;
 
     public JinBot() {
         this.ui = new Ui();
+        this.storage = new Storage();
+        // Load persisted tasks, if any
+        List<Task> loaded = storage.loadTasks();
         this.taskList = new TaskList();
+        for (Task t : loaded) {
+            taskList.addTask(t);
+        }
     }
 
     public void run() {
@@ -19,6 +27,7 @@ public class JinBot {
             try {
                 Command command = Parser.parse(userInput);
                 command.execute(ui, taskList);
+                storage.saveTasks(taskList);
 
                 if (command instanceof ByeCommand) {
                     return;
