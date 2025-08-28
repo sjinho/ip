@@ -7,7 +7,6 @@ import jinbot.task.Deadline;
 
 import java.time.LocalDate;
 
-
 /**
  * Represents a command to add a deadline task to the task list.
  * A deadline task has a description and a due date.
@@ -40,6 +39,7 @@ public class DeadlineCommand implements Command {
         taskList.addTask(deadline);
 
         ui.printBox("Got it. I've added this task:\n  " + deadline
-                + "\nNow you have " + taskList.getSize() + " tasks in the list.");
+            + "\nNow you have " + taskList.getSize()
+            + " tasks in the list.");
     }
 }

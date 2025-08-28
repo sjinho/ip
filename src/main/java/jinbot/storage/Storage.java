@@ -30,44 +30,45 @@ public class Storage {
      * @throws IllegalArgumentException If the line is corrupted or cannot be parsed.
      */
     private Task parseLineToTask(String line) {
-        // Split on: optional spaces, literal '|', optional spaces
-        String[] p = line.split("\\s*\\|\\s*");
-        if (p.length < 3) {
+        String[] parts = line.split("\\s*\\|\\s*");
+        if (parts.length < 3) {
             throw new IllegalArgumentException("Corrupted line: " + line);
         }
 
-        String type = p[0];
-        boolean done = "1".equals(p[1]);
-
+        String type = parts[0];
+        boolean done = "1".equals(parts[1]);
         Task task;
+
         switch (type) {
         case "T":
-            task = new Todo(p[2]);
+            task = new Todo(parts[2]);
             break;
+
         case "D":
-            if (p.length != 4) {
+            if (parts.length != 4) {
                 throw new IllegalArgumentException("Corrupted deadline: " + line);
             }
+
             try {
-                LocalDate by = LocalDate.parse(p[3]);
-                task = new Deadline(p[2], by);
+                LocalDate by = LocalDate.parse(parts[3]);
+                task = new Deadline(parts[2], by);
             } catch (DateTimeParseException e) {
-                throw new IllegalArgumentException("Corrupted deadline date: " + p[3]);
+                throw new IllegalArgumentException("Corrupted deadline date: " + parts[3]);
             }
             break;
 
         case "E":
-            if (p.length < 4) {
+            if (parts.length < 4) {
                 throw new IllegalArgumentException("Corrupted event: " + line);
             }
-            String[] fromTo = p[3].split("\\s*~\\s*");
+            String[] fromTo = parts[3].split("\\s*~\\s*");
 
             try {
                 LocalDate from = LocalDate.parse(fromTo[0].trim());
                 LocalDate to = LocalDate.parse(fromTo[1].trim());
-                task = new Event(p[2], from, to);
+                task = new Event(parts[2], from, to);
             } catch (DateTimeParseException e) {
-                throw new IllegalArgumentException("Corrupted event dates: " + p[3]);
+                throw new IllegalArgumentException("Corrupted event dates: " + parts[3]);
             }
             break;
 
@@ -118,7 +119,6 @@ public class Storage {
         } catch (IOException e) {
             System.err.println("An error occurred while loading tasks: " + e.getMessage());
         }
-
         return loadedTasks;
     }
 

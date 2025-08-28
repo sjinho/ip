@@ -1,6 +1,14 @@
 package jinbot;
 
-import jinbot.command.*;
+import jinbot.command.ByeCommand;
+import jinbot.command.Command;
+import jinbot.command.DeadlineCommand;
+import jinbot.command.DeleteCommand;
+import jinbot.command.EventCommand;
+import jinbot.command.ListCommand;
+import jinbot.command.MarkCommand;
+import jinbot.command.TodoCommand;
+import jinbot.command.UnmarkCommand;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -73,12 +81,12 @@ public class Parser {
 
             String[] deadlineParts = parts[1].split(" /by ", 2);
 
-            String description = deadlineParts[0].trim();
-            String byString = deadlineParts[1].trim();
-
             if (deadlineParts.length < 2) {
                 throw new JinBotException("Error! Needs a description and a /by time.");
             }
+
+            String description = deadlineParts[0].trim();
+            String byString = deadlineParts[1].trim();
 
 
             try {
@@ -86,7 +94,9 @@ public class Parser {
                 LocalDate by = LocalDate.parse(byString);
 
                 if (by.isBefore(today)) {
-                    throw new JinBotException("Error! The deadline date has already passed. Please enter a future date.");
+                    throw new JinBotException(
+                        "Error! The deadline date has already passed. "
+                        + "Please enter a future date.");
                 }
 
                 return new DeadlineCommand(description, by);
@@ -99,23 +109,21 @@ public class Parser {
                 }
             }
 
-
         case "event":
             if (parts.length < 2) {
                 throw new JinBotException("Error! Description of an event cannot be empty.");
             }
 
             String[] fromParts = parts[1].split(" /from ", 2);
-
             if (fromParts.length < 2) {
                 throw new JinBotException("Error! Needs a description and a /from time.");
             }
 
             String[] toParts = fromParts[1].split(" /to ", 2);
-
             if (toParts.length < 2) {
                 throw new JinBotException("Error! Needs both /from and /to times.");
             }
+
             String eventDescription = fromParts[0].trim();
             String fromString = toParts[0].trim();
             String toString = toParts[1].trim();

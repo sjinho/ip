@@ -9,7 +9,8 @@ import java.util.Scanner;
 public class Ui {
     private static final String SPACING = "        ";
     private static final String INDENTATION = "  ";
-    private static final String HORIZONTAL_LINE = SPACING + "______________________________________________________";
+    private static final String HORIZONTAL_LINE = SPACING
+        + "______________________________________________________";
     private static final String GREET = "Hello! I'm jinbot.JinBot\nWhat can I do for you?";
     private static final String GOODBYE = "Bye. Hope to see you again soon!";
 
@@ -28,7 +29,6 @@ public class Ui {
      */
     public void showGreeting() {
         printBox(GREET);
-
     }
 
     /**

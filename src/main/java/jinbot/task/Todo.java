@@ -14,7 +14,6 @@ public class Todo extends Task {
         super(description);
     }
 
-
     /**
      * Returns the string representation of this todo task for display.
      *

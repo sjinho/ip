@@ -65,7 +65,9 @@ public class TaskList {
         if (tasks.isEmpty()) {
             return "No tasks yet";
         }
+
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < tasks.size(); i++) {
             sb.append(i + 1).append(". ").append(tasks.get(i));
             if (i < tasks.size() - 1) sb.append("\n");

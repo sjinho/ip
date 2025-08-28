@@ -32,6 +32,7 @@ public class UnmarkCommand implements Command {
         Task taskToUnmark = taskList.getTask(index);
         taskToUnmark.markAsNotDone();
 
-        ui.printBox("OK, I've marked this task as not done yet:\n  " + taskToUnmark);
+        ui.printBox("OK, I've marked this task as not done yet:\n  "
+            + taskToUnmark);
     }
 }
