@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -38,15 +40,29 @@ public class Storage {
                 if (p.length != 4) {
                     throw new IllegalArgumentException("Corrupted deadline: " + line);
                 }
-                task = new Deadline(p[2], p[3]);
+
+                try {
+                    LocalDate by = LocalDate.parse(p[3]);
+                    task = new Deadline(p[2], by);
+                } catch (DateTimeParseException e) {
+                    throw new IllegalArgumentException("Corrupted deadline date: " + p[3]);
+                }
                 break;
+
             case "E":
                 // E | done | description | from-to
                 if (p.length < 4) {
                     throw new IllegalArgumentException("Corrupted event: " + line);
                 }
-                String[] fromTo = p[3].split("\\s*-\\s*");
-                task = new Event(p[2], fromTo[0], fromTo[1]);
+                String[] fromTo = p[3].split("\\s*~\\s*");
+
+                try {
+                    LocalDate from = LocalDate.parse(fromTo[0].trim());
+                    LocalDate to = LocalDate.parse(fromTo[1].trim());
+                    task = new Event(p[2], from, to);
+                } catch (DateTimeParseException e) {
+                    throw new IllegalArgumentException("Corrupted event dates: " + p[3]);
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Bad type: " + type);

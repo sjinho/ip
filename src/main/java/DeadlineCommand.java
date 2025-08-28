@@ -1,8 +1,11 @@
+import java.time.LocalDate;
+
+
 public class DeadlineCommand implements Command {
     private final String description;
-    private final String by;
+    private final LocalDate by;
 
-    public DeadlineCommand(String description, String by) {
+    public DeadlineCommand(String description, LocalDate by) {
         this.description = description;
         this.by = by;
     }
