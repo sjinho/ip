@@ -31,41 +31,41 @@ public class Storage {
 
         Task task;
         switch (type) {
-            case "T":
-                // T | done | description
-                task = new Todo(p[2]);
-                break;
-            case "D":
-                // D | done | description | by
-                if (p.length != 4) {
-                    throw new IllegalArgumentException("Corrupted deadline: " + line);
-                }
+        case "T":
+            // T | done | description
+            task = new Todo(p[2]);
+            break;
+        case "D":
+            // D | done | description | by
+            if (p.length != 4) {
+                throw new IllegalArgumentException("Corrupted deadline: " + line);
+            }
+            try {
+                LocalDate by = LocalDate.parse(p[3]);
+                task = new Deadline(p[2], by);
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("Corrupted deadline date: " + p[3]);
+            }
+            break;
 
-                try {
-                    LocalDate by = LocalDate.parse(p[3]);
-                    task = new Deadline(p[2], by);
-                } catch (DateTimeParseException e) {
-                    throw new IllegalArgumentException("Corrupted deadline date: " + p[3]);
-                }
-                break;
+        case "E":
+            // E | done | description | from-to
+            if (p.length < 4) {
+                throw new IllegalArgumentException("Corrupted event: " + line);
+            }
+            String[] fromTo = p[3].split("\\s*~\\s*");
 
-            case "E":
-                // E | done | description | from-to
-                if (p.length < 4) {
-                    throw new IllegalArgumentException("Corrupted event: " + line);
-                }
-                String[] fromTo = p[3].split("\\s*~\\s*");
+            try {
+                LocalDate from = LocalDate.parse(fromTo[0].trim());
+                LocalDate to = LocalDate.parse(fromTo[1].trim());
+                task = new Event(p[2], from, to);
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("Corrupted event dates: " + p[3]);
+            }
+            break;
 
-                try {
-                    LocalDate from = LocalDate.parse(fromTo[0].trim());
-                    LocalDate to = LocalDate.parse(fromTo[1].trim());
-                    task = new Event(p[2], from, to);
-                } catch (DateTimeParseException e) {
-                    throw new IllegalArgumentException("Corrupted event dates: " + p[3]);
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("Bad type: " + type);
+        default:
+            throw new IllegalArgumentException("Bad type: " + type);
         }
 
         if (done) {
@@ -121,5 +121,4 @@ public class Storage {
             System.err.println("An error occurred while saving tasks: " + e.getMessage());
         }
     }
-
 }

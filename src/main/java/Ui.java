@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Ui {
     private static final String SPACING = "        ";
     private static final String INDENTATION = "  ";
@@ -5,8 +7,23 @@ public class Ui {
     private static final String GREET = "Hello! I'm JinBot\nWhat can I do for you?";
     private static final String GOODBYE = "Bye. Hope to see you again soon!";
 
-    public void showGreeting() { printBox(GREET); }
-    public void showGoodbye() { printBox(GOODBYE); }
+    private final Scanner scanner;
+
+    public Ui() {
+        scanner = new Scanner(System.in);
+    }
+
+    public void showGreeting() {
+        printBox(GREET);
+
+    }
+    public void showGoodbye() {
+        printBox(GOODBYE);
+    }
+
+    public String readCommand() {
+        return scanner.nextLine();
+    }
 
     public void printBox(String message) {
         System.out.println(HORIZONTAL_LINE);

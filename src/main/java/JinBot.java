@@ -19,12 +19,10 @@ public class JinBot {
 
     public void run() {
         ui.showGreeting();
-        Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String userInput = scanner.nextLine();
-
             try {
+                String userInput = ui.readCommand();
                 Command command = Parser.parse(userInput);
                 command.execute(ui, taskList);
                 storage.saveTasks(taskList);
