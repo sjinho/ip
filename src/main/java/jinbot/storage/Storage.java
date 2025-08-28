@@ -15,22 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Handles loading and saving tasks to disk using a simple line format.
- * Example lines:
- * T | 1 | read book
- * D | 0 | return book | Sunday
- * E | 0 | project meeting | Mon 2pm | 4pm
- */
 public class Storage {
     private static final String DATA_DIR = "data";
     private static final String FILE_NAME = "jinbot.txt";
 
-    /** 
-     * Parses a single save-line into a jinbot.task.Task.
-     */
     private Task parseLineToTask(String line) {
-        // Split on: optional spaces, literal '|', optional spaces
         String[] parts = line.split("\\s*\\|\\s*");
         if (parts.length < 3) {
             throw new IllegalArgumentException("Corrupted line: " + line);
@@ -42,14 +31,14 @@ public class Storage {
 
         switch (type) {
         case "T":
-            // T | done | description
             task = new Todo(parts[2]);
             break;
+
         case "D":
-            // D | done | description | by
             if (parts.length != 4) {
                 throw new IllegalArgumentException("Corrupted deadline: " + line);
             }
+
             try {
                 LocalDate by = LocalDate.parse(parts[3]);
                 task = new Deadline(parts[2], by);
@@ -59,7 +48,6 @@ public class Storage {
             break;
 
         case "E":
-            // E | done | description | from-to
             if (parts.length < 4) {
                 throw new IllegalArgumentException("Corrupted event: " + line);
             }
@@ -115,7 +103,6 @@ public class Storage {
         } catch (IOException e) {
             System.err.println("An error occurred while loading tasks: " + e.getMessage());
         }
-
         return loadedTasks;
     }
 
