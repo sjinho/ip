@@ -9,6 +9,7 @@ import jinbot.command.ListCommand;
 import jinbot.command.MarkCommand;
 import jinbot.command.TodoCommand;
 import jinbot.command.UnmarkCommand;
+import jinbot.command.FindCommand;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
