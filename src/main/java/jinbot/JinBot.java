@@ -2,10 +2,10 @@ package jinbot;
 
 import java.util.List;
 
-import jinbot.ui.Ui;
-import jinbot.storage.Storage;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
+import jinbot.ui.Ui;
+import jinbot.storage.Storage;
 import jinbot.command.Command;
 import jinbot.command.ByeCommand;
 
