@@ -3,7 +3,6 @@ package jinbot.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
 public class Event extends Task {
     private final LocalDate from;
     private final LocalDate to;

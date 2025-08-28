@@ -8,7 +8,7 @@ public class MarkCommand implements Command {
     private final int index;
 
     public MarkCommand(String indexString) {
-        this.index = Integer.parseInt(indexString) - 1; // Convert to 0-based index
+        this.index = Integer.parseInt(indexString) - 1;
     }
 
     @Override

@@ -24,6 +24,7 @@ public class EventCommand implements Command {
         taskList.addTask(event);
 
         ui.printBox("Got it. I've added this task:\n  " + event
-                + "\nNow you have " + taskList.getSize() + " tasks in the list.");
+            + "\nNow you have " + taskList.getSize()
+            + " tasks in the list.");
     }
 }
