@@ -1,3 +1,9 @@
+package jinbot.command;
+
+import jinbot.ui.Ui;
+import jinbot.task.Task;
+import jinbot.task.TaskList;
+
 public class MarkCommand implements Command {
     private final int index;
 

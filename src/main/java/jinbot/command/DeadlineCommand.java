@@ -1,4 +1,13 @@
+package jinbot.command;
+
+import jinbot.ui.Ui;
+import jinbot.task.Task;
+import jinbot.task.TaskList;
+import jinbot.task.Deadline;
+
 import java.time.LocalDate;
+
+
 
 public class DeadlineCommand implements Command {
     private final String description;
