@@ -159,6 +159,7 @@ public class Parser {
             if (parts.length < 2) {
                 throw new JinBotException("Error! Provide a task number to delete.");
             }
+
             return new DeleteCommand(parts[1]);
 
         case "find":

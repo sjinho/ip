@@ -1,5 +1,6 @@
 package jinbot.command;
 
+import jinbot.JinBotException;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
 import jinbot.ui.Ui;
@@ -16,8 +17,13 @@ public class MarkCommand implements Command {
      *
      * @param indexString The 1-based index of the task to mark as done, as a string.
      */
-    public MarkCommand(String indexString) {
-        this.index = Integer.parseInt(indexString) - 1;
+    public MarkCommand(String indexString) throws JinBotException {
+        try {
+            this.index = Integer.parseInt(indexString) - 1;
+        } catch (NumberFormatException e) {
+            throw new JinBotException(
+                    "Error! Number must be a valid integer.");
+        }
     }
 
     /**
@@ -28,10 +34,12 @@ public class MarkCommand implements Command {
      * @param taskList The task list containing the task to be marked as done.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         Task taskToMark = taskList.getTask(index);
         taskToMark.markAsDone();
 
-        ui.printBox("Nice! I've marked this task as done:\n  " + taskToMark);
+        String response = "Nice! I've marked this task as done:\n  " + taskToMark;
+        ui.printBox(response);
+        return response;
     }
 }

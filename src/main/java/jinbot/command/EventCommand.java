@@ -36,12 +36,15 @@ public class EventCommand implements Command {
      * @param taskList The task list to which the event is added.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         Task event = new Event(description, from, to);
         taskList.addTask(event);
 
-        ui.printBox("Got it. I've added this task:\n  " + event
+        String response = "Got it. I've added this task:\n  " + event
             + "\nNow you have " + taskList.getSize()
-            + " tasks in the list.");
+            + " tasks in the list.";
+
+        ui.printBox(response);
+        return response;
     }
 }

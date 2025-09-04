@@ -1,5 +1,6 @@
 package jinbot.command;
 
+import jinbot.JinBotException;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
 import jinbot.ui.Ui;
@@ -16,8 +17,13 @@ public class UnmarkCommand implements Command {
      *
      * @param indexString The 1-based index of the task to unmark, as a string.
      */
-    public UnmarkCommand(String indexString) {
-        this.index = Integer.parseInt(indexString) - 1;
+    public UnmarkCommand(String indexString) throws JinBotException {
+        try {
+            this.index = Integer.parseInt(indexString) - 1;
+        } catch (NumberFormatException e) {
+            throw new JinBotException(
+                    "Error! Number must be a valid integer.");
+        }
     }
 
     /**
@@ -28,11 +34,13 @@ public class UnmarkCommand implements Command {
      * @param taskList The task list containing the task to be unmarked.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         Task taskToUnmark = taskList.getTask(index);
         taskToUnmark.markAsNotDone();
 
-        ui.printBox("OK, I've marked this task as not done yet:\n  "
-            + taskToUnmark);
+        String response = "OK, I've marked this task as not done yet:\n  "
+                + taskToUnmark;
+        ui.printBox(response);
+        return response;
     }
 }

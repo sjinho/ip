@@ -58,6 +58,9 @@ public class JinBot {
                 }
             } catch (JinBotException e) {
                 ui.printBox(e.getMessage());
+            } catch (IndexOutOfBoundsException e) {
+                ui.printBox("Invalid task number. Task number must be positive integer "
+                    + "within size of the current task list");
             } catch (Exception e) {
                 ui.printBox("Oops! Something went wrong. Please try again.");
             }
@@ -69,5 +72,24 @@ public class JinBot {
      */
     public static void main(String[] args) {
         new JinBot().run();
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        try {
+            Command command = Parser.parse(input);
+            String response = command.execute(ui, taskList);
+            storage.saveTasks(taskList);
+            return response;
+        } catch (JinBotException e) {
+            return e.getMessage();
+        } catch (IndexOutOfBoundsException e) {
+            return "Invalid task number. Task number must be positive integer "
+                    + "within size of the current task list";
+        } catch (Exception e) {
+            return "Oops! Something went wrong. Please try again.";
+        }
     }
 }

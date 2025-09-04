@@ -11,7 +11,8 @@ import jinbot.ui.Ui;
 public class ByeCommand implements Command {
 
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         ui.showGoodbye();
+        return "Bye. Hope to see you again soon!";
     }
 }

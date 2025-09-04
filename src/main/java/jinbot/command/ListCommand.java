@@ -16,8 +16,11 @@ public class ListCommand implements Command {
      * @param taskList The task list containing the tasks to display.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         String listOutput = taskList.toNumberedListItems();
-        ui.printBox("Here are the tasks in your list:\n" + listOutput);
+        String response = "Here are the tasks in your list:\n" + listOutput;
+        ui.printBox(response);
+        return response;
+
     }
 }

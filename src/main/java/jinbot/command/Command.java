@@ -15,5 +15,5 @@ public interface Command {
      * @param ui       The UI instance that handles user interaction.
      * @param taskList The list of tasks to be modified or displayed.
      */
-    void execute(Ui ui, TaskList taskList);
+    String execute(Ui ui, TaskList taskList);
 }

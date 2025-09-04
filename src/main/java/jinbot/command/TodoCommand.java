@@ -28,12 +28,14 @@ public class TodoCommand implements Command {
      * @param taskList The task list to which the todo is added.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         Task todo = new Todo(description);
         taskList.addTask(todo);
 
-        ui.printBox("Got it. I've added this task:\n  " + todo
+        String response = "Got it. I've added this task:\n  " + todo
             + "\nNow you have " + taskList.getSize()
-            + " tasks in the list.");
+            + " tasks in the list.";
+        ui.printBox(response);
+        return response;
     }
 }

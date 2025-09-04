@@ -34,12 +34,15 @@ public class DeadlineCommand implements Command {
      * @param taskList The task list to which the deadline task is added.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         Task deadline = new Deadline(description, by);
         taskList.addTask(deadline);
 
-        ui.printBox("Got it. I've added this task:\n  " + deadline
+        String response = "Got it. I've added this task:\n  " + deadline
             + "\nNow you have " + taskList.getSize()
-            + " tasks in the list.");
+            + " tasks in the list.";
+
+        ui.printBox(response);
+        return response;
     }
 }

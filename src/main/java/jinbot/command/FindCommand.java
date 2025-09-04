@@ -29,7 +29,7 @@ public class FindCommand implements Command {
      * @param taskList The task list to search within.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         StringBuilder resultBuilder = new StringBuilder();
         int matchCount = 0;
 
@@ -42,10 +42,14 @@ public class FindCommand implements Command {
         }
 
         if (matchCount == 0) {
-            ui.printBox("No matching tasks found for: " + keyword);
+            String response = "No matching tasks found for: " + keyword;
+            ui.printBox(response);
+            return response;
         } else {
             String result = resultBuilder.toString().trim();
-            ui.printBox("Here are the matching tasks in your list:\n" + result);
+            String response = "Here are the matching tasks in your list:\n" + result;
+            ui.printBox(response);
+            return response;
         }
     }
 }

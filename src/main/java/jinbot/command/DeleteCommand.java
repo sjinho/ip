@@ -16,15 +16,15 @@ public class DeleteCommand implements Command {
      * Constructs a DeleteCommand with the given index string.
      * The string is parsed into a zero-based integer index.
      *
-     * @param indexStr The 1-based index of the task to delete, as a string.
+     * @param indexString The 1-based index of the task to delete, as a string.
      * @throws JinBotException If the index string is not a valid integer.
      */
-    public DeleteCommand(String indexStr) throws JinBotException {
+    public DeleteCommand(String indexString) throws JinBotException {
         try {
-            this.index = Integer.parseInt(indexStr) - 1;
+            this.index = Integer.parseInt(indexString) - 1;
         } catch (NumberFormatException e) {
             throw new JinBotException(
-                "Error! jinbot.task.Task number must be a valid integer.");
+                    "Error! Number must be a valid integer.");
         }
     }
 
@@ -36,10 +36,14 @@ public class DeleteCommand implements Command {
      * @param taskList The task list from which the task is removed.
      */
     @Override
-    public void execute(Ui ui, TaskList taskList) {
+    public String execute(Ui ui, TaskList taskList) {
         Task removed = taskList.removeTask(index);
-        ui.printBox("Noted. I've removed this task:\n  " + removed
+        String response = "Noted. I've removed this task:\n  " + removed
             + "\nNow you have " + taskList.getSize()
-            + " tasks in the list.");
+            + " tasks in the list.";
+
+        ui.printBox(response);
+
+        return response;
     }
 }
