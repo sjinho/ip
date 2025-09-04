@@ -76,6 +76,8 @@ public class JinBot {
 
     /**
      * Generates a response for the user's chat message.
+     * @param input User input command.
+     * @return It returns response of the user input command.
      */
     public String getResponse(String input) {
         try {
