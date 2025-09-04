@@ -1,9 +1,9 @@
 package jinbot.command;
 
-import jinbot.ui.Ui;
+import jinbot.JinBotException;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
-import jinbot.JinBotException;
+import jinbot.ui.Ui;
 
 /**
  * Represents a command to delete a task from the task list.

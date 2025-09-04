@@ -29,7 +29,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toSaveFormat() {
-        return "D | " + (getisDone() ? "1" : "0")
+        return "D | " + (getIsDone() ? "1" : "0")
             + " | " + getTaskName() + " | " + by.toString();
     }
 

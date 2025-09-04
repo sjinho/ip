@@ -1,7 +1,7 @@
 package jinbot.task;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a list of tasks. Provides operations to add, remove, retrieve,
@@ -70,7 +70,9 @@ public class TaskList {
 
         for (int i = 0; i < tasks.size(); i++) {
             sb.append(i + 1).append(". ").append(tasks.get(i));
-            if (i < tasks.size() - 1) sb.append("\n");
+            if (i < tasks.size() - 1) {
+                sb.append("\n");
+            }
         }
         return sb.toString();
     }

@@ -1,9 +1,9 @@
 package jinbot.command;
 
-import jinbot.task.Todo;
-import jinbot.ui.Ui;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
+import jinbot.task.Todo;
+import jinbot.ui.Ui;
 
 /**
  * Represents a command to add a todo task to the task list.

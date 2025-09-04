@@ -1,8 +1,8 @@
 package jinbot.command;
 
-import jinbot.ui.Ui;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
+import jinbot.ui.Ui;
 
 /**
  * Represents a command to mark a task in the task list as done.
