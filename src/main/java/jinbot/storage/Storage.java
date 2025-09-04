@@ -1,11 +1,5 @@
 package jinbot.storage;
 
-import jinbot.task.Todo;
-import jinbot.task.Deadline;
-import jinbot.task.Event;
-import jinbot.task.Task;
-import jinbot.task.TaskList;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +8,12 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import jinbot.task.Deadline;
+import jinbot.task.Event;
+import jinbot.task.Task;
+import jinbot.task.TaskList;
+import jinbot.task.Todo;
 
 /**
  * Handles loading and saving tasks to disk using a simple line format.

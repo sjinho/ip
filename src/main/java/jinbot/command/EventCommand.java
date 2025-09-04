@@ -1,11 +1,11 @@
 package jinbot.command;
 
+import java.time.LocalDate;
+
 import jinbot.task.Event;
-import jinbot.ui.Ui;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
-
-import java.time.LocalDate;
+import jinbot.ui.Ui;
 
 /**
  * Represents a command to add an event task to the task list.

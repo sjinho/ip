@@ -1,19 +1,19 @@
 package jinbot;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import jinbot.command.ByeCommand;
 import jinbot.command.Command;
 import jinbot.command.DeadlineCommand;
 import jinbot.command.DeleteCommand;
 import jinbot.command.EventCommand;
+import jinbot.command.FindCommand;
 import jinbot.command.ListCommand;
 import jinbot.command.MarkCommand;
 import jinbot.command.TodoCommand;
 import jinbot.command.UnmarkCommand;
-import jinbot.command.FindCommand;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Parses user input into executable Command objects.
@@ -106,7 +106,8 @@ public class Parser {
                     LocalDate by = LocalDate.parse(byString, formatter);
                     return new DeadlineCommand(description, by);
                 } catch (DateTimeParseException e2) {
-                    throw new JinBotException("Error! Invalid date and time format. Please use 'DD/MM/YYYY' or 'YYYY-MM-DD'.");
+                    throw new JinBotException("Error! Invalid date and time format. "
+                        + "Please use 'DD/MM/YYYY' or 'YYYY-MM-DD'.");
                 }
             }
 
@@ -134,7 +135,8 @@ public class Parser {
                 LocalDate to = LocalDate.parse(toString);
 
                 if (from.isBefore(today)) {
-                    throw new JinBotException("Error! The event start date has already passed. Please enter today’s date or a future date.");
+                    throw new JinBotException("Error! The event start date has already passed. "
+                        + "Please enter today’s date or a future date.");
                 }
 
                 if (to.isBefore(from)) {
@@ -148,7 +150,8 @@ public class Parser {
                     LocalDate to = LocalDate.parse(toString, formatter);
                     return new EventCommand(eventDescription, from, to);
                 } catch (DateTimeParseException e2) {
-                    throw new JinBotException("Error! Invalid date and time format for event. Please use 'DD/MM/YYYY' or YYYY-MM-DD'.");
+                    throw new JinBotException("Error! Invalid date and time format for event. "
+                        + "Please use 'DD/MM/YYYY' or YYYY-MM-DD'.");
                 }
             }
 

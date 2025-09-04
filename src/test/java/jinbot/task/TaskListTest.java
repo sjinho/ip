@@ -1,10 +1,17 @@
 package jinbot.task;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Test;
+
+/**
+ * Contains unit tests for Tasklist.
+ */
 public class TaskListTest {
+
+    /**
+     * Tests that adding a task correctly increases the task list size by one.
+     */
     @Test
     public void addTask_correctlyIncreasesSize() {
         TaskList taskList = new TaskList();
@@ -15,6 +22,9 @@ public class TaskListTest {
         assertEquals(1, taskList.getSize());
     }
 
+    /**
+     * Tests that removing a task correctly decreases the task list size by one.
+     */
     @Test
     public void removeTask_correctlyDecreasesSize() {
         TaskList taskList = new TaskList();
@@ -29,6 +39,9 @@ public class TaskListTest {
         assertEquals(1, taskList.getSize());
     }
 
+    /**
+     * Tests when the task list is empty.
+     */
     @Test
     public void toNumberedListItems_emptyList_returnsNoTasksMessage() {
         TaskList taskList = new TaskList();
@@ -37,6 +50,9 @@ public class TaskListTest {
         assertEquals(expected, taskList.toNumberedListItems());
     }
 
+    /**
+     * Tests that when task list contains one task.
+     */
     @Test
     public void toNumberedListItems_singleItem_returnsCorrectFormat() {
         TaskList taskList = new TaskList();
@@ -47,6 +63,9 @@ public class TaskListTest {
         assertEquals(expected, taskList.toNumberedListItems());
     }
 
+    /**
+     * Tests that when task list contains multiple tasks.
+     */
     @Test
     public void toNumberedListItems_multipleItems_returnsCorrectFormat() {
         TaskList taskList = new TaskList();

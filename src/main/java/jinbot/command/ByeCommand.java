@@ -1,7 +1,7 @@
 package jinbot.command;
 
-import jinbot.ui.Ui;
 import jinbot.task.TaskList;
+import jinbot.ui.Ui;
 
 /**
  * Represents the command to terminate the program.

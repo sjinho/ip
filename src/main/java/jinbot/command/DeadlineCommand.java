@@ -1,11 +1,11 @@
 package jinbot.command;
 
-import jinbot.ui.Ui;
+import java.time.LocalDate;
+
+import jinbot.task.Deadline;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
-import jinbot.task.Deadline;
-
-import java.time.LocalDate;
+import jinbot.ui.Ui;
 
 /**
  * Represents a command to add a deadline task to the task list.
