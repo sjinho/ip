@@ -19,6 +19,7 @@ public class FindCommand implements Command {
      * @param keyword The keyword to search for in task descriptions.
      */
     public FindCommand(String keyword) {
+        assert !keyword.isBlank() : "keyword should not be blank";
         this.keyword = keyword;
     }
 

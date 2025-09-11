@@ -25,7 +25,7 @@ public class MainWindow extends AnchorPane {
     private JinBot jinbot;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image jinbotImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
     @FXML
     public void initialize() {
@@ -39,7 +39,7 @@ public class MainWindow extends AnchorPane {
         // Show greeting when chatbot starts
         String greeting = "Hello! I'm JinBot\nWhat can I do for you?";
         dialogContainer.getChildren().add(
-                DialogBox.getDukeDialog(greeting, dukeImage)
+                DialogBox.getDukeDialog(greeting, jinbotImage)
         );
     }
 
@@ -53,7 +53,7 @@ public class MainWindow extends AnchorPane {
         String response = jinbot.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getDukeDialog(response, jinbotImage)
         );
         userInput.clear();
     }

@@ -66,6 +66,7 @@ public class Storage {
             try {
                 LocalDate from = LocalDate.parse(fromTo[0].trim());
                 LocalDate to = LocalDate.parse(fromTo[1].trim());
+                assert !to.isBefore(from) : "to should not be before from";
                 task = new Event(parts[2], from, to);
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException("Corrupted event dates: " + parts[3]);
@@ -110,7 +111,12 @@ public class Storage {
                     }
                     try {
                         Task loadedTask = parseLineToTask(line);
+                        assert loadedTask != null : "task should not be null";
+
+                        int beforeSize = loadedTasks.size();
                         loadedTasks.add(loadedTask);
+                        assert beforeSize + 1 == loadedTasks.size()
+                            : "Size of loaded tasks should be increased by 1.";
                     } catch (IllegalArgumentException e) {
                         System.err.println("Skipping invalid line: " + line);
                     }

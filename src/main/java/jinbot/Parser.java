@@ -40,6 +40,7 @@ public class Parser {
         }
 
         String[] parts = trimmedInput.split(" ", 2);
+        assert parts.length >= 1 : "Common word should be present";
         String commandWord = parts[0];
         String args = parts.length > 1 ? parts[1].trim() : "";
 

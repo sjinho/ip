@@ -37,7 +37,11 @@ public class DeleteCommand implements Command {
      */
     @Override
     public String execute(Ui ui, TaskList taskList) {
+        int beforeSize = taskList.getSize();
         Task removed = taskList.removeTask(index);
+        assert taskList.getSize() == beforeSize - 1
+            : "Size of tasklist should be decreased by 1";
+
         String response = "Noted. I've removed this task:\n  " + removed
             + "\nNow you have " + taskList.getSize()
             + " tasks in the list.";

@@ -25,6 +25,8 @@ public class EventCommand implements Command {
     public EventCommand(String description, LocalDate from, LocalDate to) {
         this.description = description;
         this.from = from;
+
+        assert !to.isBefore(from) : "Event end date must not be before from";
         this.to = to;
     }
 
@@ -38,7 +40,12 @@ public class EventCommand implements Command {
     @Override
     public String execute(Ui ui, TaskList taskList) {
         Task event = new Event(description, from, to);
+
+        int beforeSize = taskList.getSize();
         taskList.addTask(event);
+        // Tasklist size should be increased by 1
+        assert taskList.getSize() == beforeSize + 1
+                : "Tasks list size mismatch";
 
         String response = "Got it. I've added this task:\n  " + event
             + "\nNow you have " + taskList.getSize()
