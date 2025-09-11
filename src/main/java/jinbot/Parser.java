@@ -19,6 +19,10 @@ import jinbot.command.UnmarkCommand;
  * Parses user input into executable Command objects.
  */
 public class Parser {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final String DEADLINE_SEPARATOR = " /by ";
+    private static final String EVENT_FROM_SEPARATOR = " /from ";
+    private static final String EVENT_TO_SEPARATOR = " /to ";
 
     /**
      * Parses the given user input string and returns the corresponding Command.
@@ -37,139 +41,111 @@ public class Parser {
 
         String[] parts = trimmedInput.split(" ", 2);
         String commandWord = parts[0];
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String args = parts.length > 1 ? parts[1].trim() : "";
 
         switch (commandWord) {
         case "bye":
-            if (parts.length > 1) {
-                throw new JinBotException("Error! Only write 'bye' to escape.");
-            }
-
-            return new ByeCommand();
-
+            return parseBye(args);
         case "list":
-            if (parts.length > 1) {
-                throw new JinBotException("Error! Only write 'list' to list down your tasks");
-            }
-
-            return new ListCommand();
-
+            return parseList(args);
         case "mark":
-            if (parts.length < 2) {
-                throw new JinBotException("Error! Provide a task number to mark.");
-            }
-            return new MarkCommand(parts[1]);
-
+            return new MarkCommand(requireArgs(args, "Provide a task number to mark."));
         case "unmark":
-            if (parts.length < 2) {
-                throw new JinBotException("Error! Provide a task number to unmark.");
-            }
-
-            return new UnmarkCommand(parts[1]);
-
+            return new UnmarkCommand(requireArgs(args, "Provide a task number to unmark."));
         case "todo":
-            if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                throw new JinBotException("Error! Description of a todo cannot be empty.");
-            }
-
-            return new TodoCommand(parts[1].trim());
-
+            return parseTodo(args);
         case "deadline":
-            if (parts.length < 2) {
-                throw new JinBotException("Error! Description of a deadline cannot be empty.");
-            }
-
-            String[] deadlineParts = parts[1].split(" /by ", 2);
-
-            if (deadlineParts.length < 2) {
-                throw new JinBotException("Error! Needs a description and a /by time.");
-            }
-
-            String description = deadlineParts[0].trim();
-            String byString = deadlineParts[1].trim();
-
-
-            try {
-                // Use the custom formatter to parse the date and time
-                LocalDate by = LocalDate.parse(byString);
-
-                if (by.isBefore(today)) {
-                    throw new JinBotException(
-                        "Error! The deadline date has already passed. "
-                        + "Please enter a future date.");
-                }
-
-                return new DeadlineCommand(description, by);
-            } catch (DateTimeParseException e) {
-                try {
-                    LocalDate by = LocalDate.parse(byString, formatter);
-                    return new DeadlineCommand(description, by);
-                } catch (DateTimeParseException e2) {
-                    throw new JinBotException("Error! Invalid date and time format. "
-                        + "Please use 'DD/MM/YYYY' or 'YYYY-MM-DD'.");
-                }
-            }
-
+            return parseDeadline(args, today);
         case "event":
-            if (parts.length < 2) {
-                throw new JinBotException("Error! Description of an event cannot be empty.");
-            }
-
-            String[] fromParts = parts[1].split(" /from ", 2);
-            if (fromParts.length < 2) {
-                throw new JinBotException("Error! Needs a description and a /from time.");
-            }
-
-            String[] toParts = fromParts[1].split(" /to ", 2);
-            if (toParts.length < 2) {
-                throw new JinBotException("Error! Needs both /from and /to times.");
-            }
-
-            String eventDescription = fromParts[0].trim();
-            String fromString = toParts[0].trim();
-            String toString = toParts[1].trim();
-
-            try {
-                LocalDate from = LocalDate.parse(fromString);
-                LocalDate to = LocalDate.parse(toString);
-
-                if (from.isBefore(today)) {
-                    throw new JinBotException("Error! The event start date has already passed. "
-                        + "Please enter today’s date or a future date.");
-                }
-
-                if (to.isBefore(from)) {
-                    throw new JinBotException("Error! The event start date must be before the end date.");
-                }
-
-                return new EventCommand(eventDescription, from, to);
-            } catch (DateTimeParseException e) {
-                try {
-                    LocalDate from = LocalDate.parse(fromString, formatter);
-                    LocalDate to = LocalDate.parse(toString, formatter);
-                    return new EventCommand(eventDescription, from, to);
-                } catch (DateTimeParseException e2) {
-                    throw new JinBotException("Error! Invalid date and time format for event. "
-                        + "Please use 'DD/MM/YYYY' or YYYY-MM-DD'.");
-                }
-            }
-
+            return parseEvent(args, today);
         case "delete":
-            if (parts.length < 2) {
-                throw new JinBotException("Error! Provide a task number to delete.");
-            }
-
-            return new DeleteCommand(parts[1]);
-
+            return new DeleteCommand(requireArgs(args, "Provide a task number to delete."));
         case "find":
-            if (parts.length < 2) {
-                throw new JinBotException("Error! Provide a keyword to search for tasks.");
-            }
-            return new FindCommand(parts[1].trim());
-
+            return new FindCommand(requireArgs(args, "Provide a task number to find."));
         default:
             throw new JinBotException("Error! I don't understand that command word: " + commandWord);
         }
+    }
+
+    private static Command parseBye(String args) throws JinBotException {
+        if (!args.isEmpty()) {
+            throw new JinBotException("Error! Only write 'bye' to exit.");
+        }
+        return new ByeCommand();
+    }
+
+    private static Command parseList(String args) throws JinBotException {
+        if (!args.isEmpty()) {
+            throw new JinBotException("Error! Only write 'list'.");
+        }
+        return new ListCommand();
+    }
+
+    private static Command parseTodo(String args) throws JinBotException {
+        if (args.isEmpty()) {
+            throw new JinBotException("Error! Todo description cannot be empty.");
+        }
+        return new TodoCommand(args);
+    }
+
+    private static Command parseDeadline(String args, LocalDate today) throws JinBotException {
+        String[] parts = args.split(DEADLINE_SEPARATOR, 2);
+        if (parts.length < 2) {
+            throw new JinBotException("Error! Needs description and /by time.");
+        }
+
+        String description = parts[0].trim();
+        LocalDate by = parseDate(parts[1].trim());
+        if (by.isBefore(today)) {
+            throw new JinBotException("Error! Deadline already passed.");
+        }
+        return new DeadlineCommand(description, by);
+    }
+
+    private static Command parseEvent(String args, LocalDate today) throws JinBotException {
+        if (args.isEmpty()) {
+            throw new JinBotException("Error! Description of an event cannot be empty.");
+        }
+
+        String[] fromParts = args.split(EVENT_FROM_SEPARATOR, 2);
+        if (fromParts.length < 2) {
+            throw new JinBotException("Error! Needs /from time.");
+        }
+
+        String[] toParts = fromParts[1].split(EVENT_TO_SEPARATOR, 2);
+        if (toParts.length < 2) {
+            throw new JinBotException("Error! Needs both /from and /to times.");
+        }
+
+        LocalDate from = parseDate(toParts[0].trim());
+        LocalDate to = parseDate(toParts[1].trim());
+
+        if (from.isBefore(today)) {
+            throw new JinBotException("Error! Event start has passed.");
+        }
+        if (to.isBefore(from)) {
+            throw new JinBotException("Error! Event end must be after start.");
+        }
+
+        return new EventCommand(fromParts[0].trim(), from, to);
+    }
+
+    private static LocalDate parseDate(String dateStr) throws JinBotException {
+        try {
+            return LocalDate.parse(dateStr);
+        } catch (DateTimeParseException e) {
+            try {
+                return LocalDate.parse(dateStr, FORMATTER);
+            } catch (DateTimeParseException e2) {
+                throw new JinBotException("Error! Invalid date format. Use 'DD/MM/YYYY' or 'YYYY-MM-DD'.");
+            }
+        }
+    }
+
+    private static String requireArgs(String args, String errorMessage) throws JinBotException {
+        if (args.isEmpty()) {
+            throw new JinBotException("Error! " + errorMessage);
+        }
+        return args;
     }
 }
