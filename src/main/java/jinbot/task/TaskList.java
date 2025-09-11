@@ -33,7 +33,9 @@ public class TaskList {
      * @return The task at the given index.
      */
     public Task getTask(int index) {
-        return tasks.get(index);
+        Task task = tasks.get(index);
+        assert index < getSize() : "index should be less than size of task list";
+        return task;
     }
 
     /**
@@ -69,7 +71,9 @@ public class TaskList {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < tasks.size(); i++) {
-            sb.append(i + 1).append(". ").append(tasks.get(i));
+            Task task = tasks.get(i);
+            assert task != null : "task should not be null";
+            sb.append(i + 1).append(". ").append(task);
             if (i < tasks.size() - 1) {
                 sb.append("\n");
             }

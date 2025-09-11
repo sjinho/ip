@@ -18,6 +18,7 @@ public class ListCommand implements Command {
     @Override
     public String execute(Ui ui, TaskList taskList) {
         String listOutput = taskList.toNumberedListItems();
+        assert !listOutput.isBlank() : "listOutput must not be blank";
         String response = "Here are the tasks in your list:\n" + listOutput;
         ui.printBox(response);
         return response;

@@ -22,6 +22,11 @@ public class DeadlineCommand implements Command {
      * @param by          The due date of the deadline task.
      */
     public DeadlineCommand(String description, LocalDate by) {
+        // Arguments must be valid.
+        assert description != null : "Description should not be null";
+        assert !description.isBlank() : "Description should not be empty";
+        assert by != null : "By should not be null";
+
         this.description = description;
         this.by = by;
     }
