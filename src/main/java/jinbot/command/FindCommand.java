@@ -1,5 +1,7 @@
 package jinbot.command;
 
+import java.util.ArrayList;
+
 import jinbot.task.Task;
 import jinbot.task.TaskList;
 import jinbot.ui.Ui;
@@ -22,6 +24,43 @@ public class FindCommand implements Command {
     }
 
     /**
+     * Finds all tasks in the given task list whose description contains the keyword
+     * (case-insensitive).
+     *
+     * @param taskList The task list to search within.
+     * @return A list of tasks that match the keyword.
+     */
+    public ArrayList<Task> findMatchingTasks(TaskList taskList) {
+        ArrayList<Task> matches = new ArrayList<>();
+
+        for (int i = 0; i < taskList.getSize(); i++) {
+            Task task = taskList.getTask(i);
+            if (task.getTaskName().toLowerCase().contains(keyword.toLowerCase())) {
+                matches.add(task);
+            }
+        }
+        return matches;
+    }
+
+    /**
+     * Formats the given list of matching tasks into a user-friendly string.
+     *
+     * @param matches The list of tasks that matched the search keyword.
+     * @return A formatted string showing all matching tasks in numbered order,
+     */
+    public String formatMatches(ArrayList<Task> matches) {
+        if (matches.isEmpty()) {
+            return "No matching tasks found for: " + keyword;
+        }
+        StringBuilder resultBuilder = new StringBuilder("Here are the matching tasks in your list:\n");
+        for (int i = 0; i < matches.size(); i++) {
+            resultBuilder.append(i + 1).append(". ").append(matches.get(i)).append("\n");
+        }
+        return resultBuilder.toString().trim();
+    }
+
+
+    /**
      * Executes the find command by searching through the given task list.
      * Tasks which descriptions contain the keyword (case-insensitive)
      * are displayed in a numbered list. If no tasks match, a message is shown.
@@ -31,26 +70,9 @@ public class FindCommand implements Command {
      */
     @Override
     public String execute(Ui ui, TaskList taskList) {
-        StringBuilder resultBuilder = new StringBuilder();
-        int matchCount = 0;
-
-        for (int i = 0; i < taskList.getSize(); i++) {
-            Task task = taskList.getTask(i);
-            if (task.getTaskName().toLowerCase().contains(keyword.toLowerCase())) {
-                resultBuilder.append(matchCount + 1).append(". ").append(task).append("\n");
-                matchCount++;
-            }
-        }
-
-        if (matchCount == 0) {
-            String response = "No matching tasks found for: " + keyword;
-            ui.printBox(response);
-            return response;
-        } else {
-            String result = resultBuilder.toString().trim();
-            String response = "Here are the matching tasks in your list:\n" + result;
-            ui.printBox(response);
-            return response;
-        }
+        ArrayList<Task> matches = findMatchingTasks(taskList);
+        String response = formatMatches(matches);
+        ui.printBox(response);
+        return response;
     }
 }

@@ -64,9 +64,7 @@ public abstract class Task {
      *
      * @return A formatted string used to save this task to disk.
      */
-    public String toSaveFormat() {
-        return "T | " + (isDone ? "1" : "0") + " | " + taskName;
-    }
+    public abstract String toSaveFormat();
 
     /**
      * Returns the string representation of this task for display.
