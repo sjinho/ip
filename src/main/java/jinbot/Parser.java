@@ -36,6 +36,7 @@ public class Parser {
         }
 
         String[] parts = trimmedInput.split(" ", 2);
+        assert parts.length >= 1 : "Common word should be present";
         String commandWord = parts[0];
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -89,7 +90,6 @@ public class Parser {
             String description = deadlineParts[0].trim();
             String byString = deadlineParts[1].trim();
 
-
             try {
                 // Use the custom formatter to parse the date and time
                 LocalDate by = LocalDate.parse(byString);
@@ -127,8 +127,11 @@ public class Parser {
             }
 
             String eventDescription = fromParts[0].trim();
+            assert !eventDescription.isBlank() : "EventDescription should not be blank";
             String fromString = toParts[0].trim();
+            assert !fromString.isBlank() : "From should not be blank";
             String toString = toParts[1].trim();
+            assert !toString.isBlank() : "ToString should not be blank";
 
             try {
                 LocalDate from = LocalDate.parse(fromString);

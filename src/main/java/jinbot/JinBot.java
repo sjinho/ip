@@ -31,8 +31,10 @@ public class JinBot {
         this.storage = new Storage();
         // Load persisted tasks, if any
         List<Task> loaded = storage.loadTasks();
+        assert loaded != null : "Loaded tasks from storage should not be null";
         this.taskList = new TaskList();
         for (Task t : loaded) {
+            assert t != null : "Loaded tasks from storage should not be null";
             taskList.addTask(t);
         }
     }

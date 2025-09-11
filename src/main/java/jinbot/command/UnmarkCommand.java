@@ -22,7 +22,7 @@ public class UnmarkCommand implements Command {
             this.index = Integer.parseInt(indexString) - 1;
         } catch (NumberFormatException e) {
             throw new JinBotException(
-                    "Error! Number must be a valid integer.");
+                "Error! Number must be a valid integer.");
         }
     }
 
@@ -36,6 +36,7 @@ public class UnmarkCommand implements Command {
     @Override
     public String execute(Ui ui, TaskList taskList) {
         Task taskToUnmark = taskList.getTask(index);
+        assert taskToUnmark != null : "taskToUnmark should not be null";
         taskToUnmark.markAsNotDone();
 
         String response = "OK, I've marked this task as not done yet:\n  "
