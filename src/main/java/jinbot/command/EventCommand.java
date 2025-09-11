@@ -45,7 +45,7 @@ public class EventCommand implements Command {
         taskList.addTask(event);
         // Tasklist size should be increased by 1
         assert taskList.getSize() == beforeSize + 1
-                : "Tasks list size mismatch";
+            : "Tasks list size mismatch";
 
         String response = "Got it. I've added this task:\n  " + event
             + "\nNow you have " + taskList.getSize()

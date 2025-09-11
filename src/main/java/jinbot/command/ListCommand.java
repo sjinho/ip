@@ -22,6 +22,5 @@ public class ListCommand implements Command {
         String response = "Here are the tasks in your list:\n" + listOutput;
         ui.printBox(response);
         return response;
-
     }
 }

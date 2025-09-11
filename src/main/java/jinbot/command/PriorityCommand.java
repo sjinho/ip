@@ -47,4 +47,3 @@ public class PriorityCommand implements Command {
         return response;
     }
 }
-

@@ -47,7 +47,6 @@ public class DeleteCommand implements Command {
             + " tasks in the list.";
 
         ui.printBox(response);
-
         return response;
     }
 }

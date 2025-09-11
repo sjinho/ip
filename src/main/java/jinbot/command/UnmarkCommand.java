@@ -40,7 +40,7 @@ public class UnmarkCommand implements Command {
         taskToUnmark.markAsNotDone();
 
         String response = "OK, I've marked this task as not done yet:\n  "
-                + taskToUnmark;
+            + taskToUnmark;
         ui.printBox(response);
         return response;
     }
