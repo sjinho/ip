@@ -59,7 +59,7 @@ public class TaskListTest {
         Task task1 = new Todo("test todo 1");
 
         taskList.addTask(task1);
-        String expected = "1. [T][ ] test todo 1";
+        String expected = "1. [T][ ] test todo 1 [MEDIUM]";
         assertEquals(expected, taskList.toNumberedListItems());
     }
 
@@ -74,7 +74,7 @@ public class TaskListTest {
 
         taskList.addTask(task1);
         taskList.addTask(task2);
-        String expected = "1. [T][ ] test todo 1\n2. [T][ ] test todo 2";
+        String expected = "1. [T][ ] test todo 1 [MEDIUM]\n2. [T][ ] test todo 2 [MEDIUM]";
         assertEquals(expected, taskList.toNumberedListItems());
     }
 }

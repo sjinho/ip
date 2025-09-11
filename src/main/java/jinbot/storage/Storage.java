@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import jinbot.task.Deadline;
 import jinbot.task.Event;
+import jinbot.task.Priority;
 import jinbot.task.Task;
 import jinbot.task.TaskList;
 import jinbot.task.Todo;
@@ -31,7 +32,7 @@ public class Storage {
      */
     private Task parseLineToTask(String line) {
         String[] parts = line.split("\\s*\\|\\s*");
-        if (parts.length < 3) {
+        if (parts.length < 4) {
             throw new IllegalArgumentException("Corrupted line: " + line);
         }
 
@@ -42,23 +43,25 @@ public class Storage {
         switch (type) {
         case "T":
             task = new Todo(parts[2]);
+            task.setPriority(Priority.valueOf(parts[3]));
             break;
 
         case "D":
-            if (parts.length != 4) {
+            if (parts.length != 5) {
                 throw new IllegalArgumentException("Corrupted deadline: " + line);
             }
 
             try {
                 LocalDate by = LocalDate.parse(parts[3]);
                 task = new Deadline(parts[2], by);
+                task.setPriority(Priority.valueOf(parts[4]));
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException("Corrupted deadline date: " + parts[3]);
             }
             break;
 
         case "E":
-            if (parts.length < 4) {
+            if (parts.length < 5) {
                 throw new IllegalArgumentException("Corrupted event: " + line);
             }
             String[] fromTo = parts[3].split("\\s*~\\s*");
@@ -68,6 +71,7 @@ public class Storage {
                 LocalDate to = LocalDate.parse(fromTo[1].trim());
                 assert !to.isBefore(from) : "to should not be before from";
                 task = new Event(parts[2], from, to);
+                task.setPriority(Priority.valueOf(parts[4]));
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException("Corrupted event dates: " + parts[3]);
             }

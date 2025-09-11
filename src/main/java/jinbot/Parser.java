@@ -12,6 +12,7 @@ import jinbot.command.EventCommand;
 import jinbot.command.FindCommand;
 import jinbot.command.ListCommand;
 import jinbot.command.MarkCommand;
+import jinbot.command.PriorityCommand;
 import jinbot.command.TodoCommand;
 import jinbot.command.UnmarkCommand;
 
@@ -63,6 +64,8 @@ public class Parser {
             return new DeleteCommand(requireArgs(args, "Provide a task number to delete."));
         case "find":
             return new FindCommand(requireArgs(args, "Provide a task number to find."));
+        case "priority":
+            return parsePriority(args);
         default:
             throw new JinBotException("Error! I don't understand that command word: " + commandWord);
         }
@@ -141,6 +144,14 @@ public class Parser {
                 throw new JinBotException("Error! Invalid date format. Use 'DD/MM/YYYY' or 'YYYY-MM-DD'.");
             }
         }
+    }
+
+    private static Command parsePriority(String args) throws JinBotException {
+        String[] parts = args.split(" ");
+        if (parts.length != 2) {
+            throw new JinBotException("Error! Usage: priority <taskIndex> <LOW|MEDIUM|HIGH>");
+        }
+        return new PriorityCommand(parts[0], parts[1]);
     }
 
     private static String requireArgs(String args, String errorMessage) throws JinBotException {

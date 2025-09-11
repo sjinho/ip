@@ -6,17 +6,38 @@ package jinbot.task;
 public abstract class Task {
     private final String taskName;
     private boolean isDone;
+    private Priority priority;
 
     /**
      * Constructs a Task with the given name.
      * The task is initialized as not done.
+     * The priority is initialized as MEDIUM.
      *
      * @param taskName The name of the task.
      */
     public Task(String taskName) {
         this.taskName = taskName;
         this.isDone = false;
+        // Set default priority as MEDIUM
+        this.priority = Priority.MEDIUM;
     }
+
+    /**
+     * Returns priority of the task.
+     * @return priority The priority of the task.
+     */
+    public Priority getPriority() {
+        return priority;
+    }
+
+    /**
+     * Sets priority of the task.
+     * @param priority Priority to be updated to.
+     */
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
 
     /**
      * Marks this task as done.

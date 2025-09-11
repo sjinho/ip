@@ -35,7 +35,7 @@ public class Event extends Task {
     public String toSaveFormat() {
         return "E | " + (getIsDone() ? "1" : "0")
             + " | " + getTaskName()
-            + " | " + from.toString() + " ~ " + to.toString();
+            + " | " + from.toString() + " ~ " + to.toString() + " | " + getPriority();
     }
 
     /**
@@ -46,6 +46,6 @@ public class Event extends Task {
     @Override public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         return "[E]" + super.toString() + " (from: " + from.format(formatter)
-            + " to: " + to.format(formatter) + ")";
+            + " to: " + to.format(formatter) + ")" + " [" + getPriority() + "]";
     }
 }
