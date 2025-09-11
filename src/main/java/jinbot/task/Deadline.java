@@ -30,7 +30,7 @@ public class Deadline extends Task {
     @Override
     public String toSaveFormat() {
         return "D | " + (getIsDone() ? "1" : "0")
-            + " | " + getTaskName() + " | " + by.toString();
+            + " | " + getTaskName() + " | " + by.toString() + " | " + getPriority();
     }
 
     /**
@@ -41,6 +41,6 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-        return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";
+        return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")" + " [" + getPriority() + "]";
     }
 }
